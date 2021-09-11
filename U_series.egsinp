@@ -1,0 +1,144 @@
+:start run control:
+	ncase = 1e6
+	nbatch = 10
+:stop run control:
+
+:start geometry definition:
+
+	:start geometry:
+		name = compilation
+		library = egs_ndgeometry
+		type = EGS_XYZGeometry
+		x-planes = -50.0 50.0 
+		y-planes = -50.0 50.0 
+		z-planes = 0 100.0
+		:start media input:
+			media = vacuum concrete_ordinary
+			set medium = 0 0 1
+		:stop media input:
+	:stop geometry:
+
+	simulation geometry = compilation
+:stop geometry definition:
+
+:start media definition:
+
+	ae = 0.521
+	ap = 0.01
+	ue = 50.511
+	up = 50
+
+:start concrete_ordinary:
+	density correction file = concrete_ordinary
+:stop concrete_ordinary:
+
+:start air_dry_nearsealevel:
+	density correction file = air_dry_nearsealevel
+:stop air_dry_nearsealevel:
+
+:stop media definition:
+
+:start view control:
+	set color = concrete_ordinary 128 128 128 150
+:stop view control:
+
+:start source definition:
+	:start source:
+		name = my_source
+		library = egs_radionuclide_source
+		geometry = compilation
+		region selection = IncludeSelected
+		selected regions = 0
+		:start shape:
+			type = box
+			box size = 100 100 200
+			:start media input:
+				media = concrete_ordinary
+			:stop media input:
+		:stop shape:
+		:start spectrum:
+			type = radionuclide
+			nuclide = U-238
+			relative activity = 1
+		:stop spectrum:
+		:start spectrum:
+			type = radionuclide
+			nuclide = Th-234
+			relative activity = 1
+		:stop spectrum:
+		:start spectrum:
+			type = radionuclide
+			nuclide = Pa-234m
+			relative activity = 1
+		:stop spectrum:
+		:start spectrum:
+			type = radionuclide
+			nuclide = U-234
+			relative activity = 1
+		:stop spectrum:
+		:start spectrum:
+			type = radionuclide
+			nuclide = Th-230
+			relative activity = 1
+		:stop spectrum:
+		:start spectrum:
+			type = radionuclide
+			nuclide = Ra-226
+			relative activity = 1
+		:stop spectrum:
+		:start spectrum:
+			type = radionuclide
+			nuclide = Rn-222
+			relative activity = 1
+		:stop spectrum:
+		:start spectrum:
+			type = radionuclide
+			nuclide = Po-218
+			relative activity = 1
+		:stop spectrum:
+		:start spectrum:
+			type = radionuclide
+			nuclide = Po-214
+			relative activity = 1
+		:stop spectrum:
+		:start spectrum:
+			type = radionuclide
+			nuclide = Bi-214
+			relative activity = 1
+		:stop spectrum:
+		:start spectrum:
+			type = radionuclide
+			nuclide = Pb-214
+			relative activity = 1
+		:stop spectrum:
+		:start spectrum:
+			type = radionuclide
+			nuclide = Po-210
+			relative activity = 1
+		:stop spectrum:
+		:start spectrum:
+			type = radionuclide
+			nuclide = Bi-210
+			relative activity = 1
+		:stop spectrum:
+		:start spectrum:
+			type = radionuclide
+			nuclide = Pb-210
+			relative activity = 1
+		:stop spectrum:
+	:stop source:
+
+	simulation source = my_source
+
+:stop source definition:
+
+:start ausgab object definition:
+
+	:start ausgab object:
+		name = dose
+		library = egs_dose_scoring
+		volume = 1000000.0 
+		dose regions = 0
+	:stop ausgab object:
+
+:stop ausgab object definition:
